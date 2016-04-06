@@ -1,2 +1,1 @@
-# curcon-android
-Currency Converter - Android
+# curcon - Currency Converter
