@@ -1,0 +1,31 @@
+package ba.fit.app.hci_ammarhadzic.Utils;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+/**
+ * Created by ammar on 4/6/16.
+ */
+public class DateHelper {
+
+    public static String getKeyForDate(GregorianCalendar date){
+        return date.get(Calendar.YEAR) + "-" + String.format("%02d", date.get(Calendar.MONTH)+1) + "-" + String.format("%02d", date.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public static ArrayList<String> getStringForLastWeek(){
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Today");
+        list.add("Yesterday");
+
+        GregorianCalendar today = new GregorianCalendar();
+        today.add(Calendar.DAY_OF_YEAR,-2);
+        list.add(getKeyForDate(today));
+
+        for (int i = 0; i < 4; i++) {
+            today.add(Calendar.DAY_OF_YEAR,-1);
+            list.add(getKeyForDate(today));
+        }
+        return  list;
+    }
+}
