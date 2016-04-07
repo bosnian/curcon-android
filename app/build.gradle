@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
+    lintOptions {
+        abortOnError false
+    }
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
 
