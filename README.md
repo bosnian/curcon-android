@@ -3,7 +3,7 @@
 
 ## About
 
-This is personal class project for course **Human-Computer Interaction (HCI)** on [FIT - Faculty of Information Technology, Mostar ](www.fit.ba)
+This is personal class project for course **Human-Computer Interaction (HCI)** on [FIT - Faculty of Information Technology, Mostar ](http://www.fit.ba)
 
 It uses [CurrencyLayer](https://currencylayer.com/) API to make currency conversions. Because it uses free version, calculations for currencies other than USD had to be done manually.
 
