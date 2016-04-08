@@ -2,6 +2,7 @@ package ba.fit.app.hci_ammarhadzic.Utils;
 
 import java.io.IOException;
 
+import ba.fit.app.hci_ammarhadzic.BuildConfig;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -13,14 +14,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by ammar on 4/6/16.
  */
 public class ServiceGenerator {
-
-    public static final String API_BASE_URL = "http://apilayer.net/";
+    private static final String TAG = ServiceGenerator.class.getName();
+    private static final String API_BASE_URL = "http://apilayer.net/";
     private static final String API_PARAM_NAME = "access_key";
-    private static final String API_ACCESS_KEY = "f03dec294859f01224625812f7b963e5";
+    private static final String API_ACCESS_KEY = BuildConfig.API_ACCESS_KEY;
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-    private static Retrofit.Builder builder =
+    private static final Retrofit.Builder builder =
             new Retrofit.Builder()
                     .baseUrl(API_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create());
@@ -49,7 +50,7 @@ public class ServiceGenerator {
     }
 
     /**
-     * Genereate service depending on auth
+     * Generate service depending on auth
      *
      * @param serviceClass  Class for service mapping
      * @param auth  Add auth

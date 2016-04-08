@@ -1,7 +1,6 @@
 package ba.fit.app.hci_ammarhadzic.Managers;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.github.mikephil.charting.data.Entry;
 
@@ -12,25 +11,31 @@ import ba.fit.app.hci_ammarhadzic.Models.CurrencyQuote;
 
 /**
  * Created by ammar on 4/5/16.
+ *
+ * Singleton for keeping data while app is running
  */
 public class Repository {
     private static final String TAG = Repository.class.getName();
-    private static Repository ourInstance = new Repository();
 
-    public static Repository getInstance() {
-        return ourInstance;
-    }
-
-    private Repository() {
-    }
     public Context mAppContext = null;
-
-    public double baseValue = 1.0;
-
-
+    public final double baseValue = 1.0;
+    public List<List<CurrencyQuote>> data = null;
     private List<CurrencyQuote> lastList = null;
     private int lastID = -1;
 
+    // Singleton ...
+    private static final Repository ourInstance = new Repository();
+    public static Repository getInstance() {
+        return ourInstance;
+    }
+    private Repository() {}
+
+    /**
+     * Calculate quotes for given currency
+     *
+     * @param id Currency id in list
+     * @return Calculated currencies
+     */
     public List<CurrencyQuote> getQuotes(int id){
 
         if ( lastID == id ){
@@ -47,11 +52,11 @@ public class Repository {
         CurrencyQuote x = tmp.get(id);
         tmp.remove(id);
 
-        double usdq = baseValue / x.quote;
+        double usdQ = baseValue / x.quote;
 
         for (int i = 0; i < tmp.size(); i++) {
             double t = tmp.get(i).quote;
-            t = t * usdq;
+            t = t * usdQ;
             tmp.get(i).quote = t;
         }
 
@@ -60,12 +65,29 @@ public class Repository {
         return tmp;
     }
 
-    public List<List<CurrencyQuote>> data = null;
 
+    /**
+     * Get data for current day
+     *
+     * @return List of data for current day
+     */
     public List<CurrencyQuote> getDataForToday(){ return getDataForDay(0);}
 
+    /**
+     * Get data for given day
+     *
+     * @param i Index of day to get data for
+     * @return List of data for given day
+     */
     public List<CurrencyQuote> getDataForDay(int i){ return data.get(i); }
 
+    /**
+     * Get data for last 7 days for given currency.
+     * It returns data used for LineChart.
+     *
+     * @param id Id of currency
+     * @return Data for last 7 days
+     */
     public ArrayList<Entry> getCurrencyForWeek(int id){
         ArrayList<Entry> data = new ArrayList<>();
 

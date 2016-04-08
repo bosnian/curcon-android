@@ -16,7 +16,7 @@ public class CurrencyRateList {
     public String privacy;
     public long timestamp;
     public String source;
-    public Map<String,Double> quotes;
+    private Map<String,Double> quotes;
 
     public List<CurrencyQuote> getList(){
         List<CurrencyQuote> tmp = new ArrayList<>();

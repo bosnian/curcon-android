@@ -19,10 +19,10 @@ import butterknife.ButterKnife;
 public class CurrencyQuotesAdapter extends BaseAdapter {
     private LayoutInflater mLayoutInflater = null;
     private int currencyID = 0;
+
     public CurrencyQuotesAdapter(Activity context,int currencyID) {
         this.currencyID = currencyID;
-        Activity mContext = context;
-        mLayoutInflater = (LayoutInflater) mContext
+        mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

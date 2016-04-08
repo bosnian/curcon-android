@@ -1,4 +1,4 @@
-package ba.fit.app.hci_ammarhadzic.Models.Interface;
+package ba.fit.app.hci_ammarhadzic.Models.API;
 
 import ba.fit.app.hci_ammarhadzic.Models.Network.CurrencyRateList;
 import ba.fit.app.hci_ammarhadzic.Models.Network.CurrencyTypeList;
@@ -11,15 +11,13 @@ import retrofit2.http.Query;
  */
 public interface CurrencyAPI {
 
+    // FIXME: Remove key from url to builder
     @GET("api/list")
     Call<CurrencyTypeList> getAllCurrencies();
-
-    @GET("api/live?access_key=f03dec294859f01224625812f7b963e5")
-    Call<CurrencyRateList> getAllQuotes();
 
     @GET("api/live")
     Call<CurrencyRateList> getLiveQuotes();
 
-    @GET("api/historical?access_key=f03dec294859f01224625812f7b963e5")
+    @GET("api/historical")
     Call<CurrencyRateList> getQuotesForDate(@Query("date") String date);
 }

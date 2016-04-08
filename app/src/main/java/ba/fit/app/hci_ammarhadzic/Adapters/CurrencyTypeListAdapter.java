@@ -18,13 +18,10 @@ import butterknife.ButterKnife;
  */
 public class CurrencyTypeListAdapter extends BaseAdapter {
 
-
-    private Activity mContext;
     private LayoutInflater mLayoutInflater = null;
 
     public CurrencyTypeListAdapter(Activity context) {
-        mContext = context;
-        mLayoutInflater = (LayoutInflater) mContext
+        mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

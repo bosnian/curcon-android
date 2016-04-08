@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
+def API_ACCESS_KEY = System.getenv("API_ACCESS_KEY") ?: '"Env var not set: API_ACCESS_KEY"';
+
 android {
     lintOptions {
         abortOnError false
@@ -14,6 +16,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "API_ACCESS_KEY", API_ACCESS_KEY
     }
     buildTypes {
         release {

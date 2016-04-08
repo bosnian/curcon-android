@@ -13,7 +13,7 @@ import io.realm.RealmConfiguration;
 public class StorageManager {
     private static final String TAG = StorageManager.class.getName();
 
-    private Realm realm;
+    private final Realm realm;
     public StorageManager(){
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(Repository.getInstance().mAppContext).build();
         realm = Realm.getInstance(realmConfig);

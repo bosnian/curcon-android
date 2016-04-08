@@ -13,7 +13,11 @@ import ba.fit.app.hci_ammarhadzic.Models.Realm.CurrencyDate;
 import ba.fit.app.hci_ammarhadzic.Utils.DateHelper;
 
 /**
- * Created by ammar on 4/8/16.
+ * Created by Ammar Hadzic on 4/8/16.
+ *
+ * Cache data for later use
+ * Save data to DB if it isn't already saved
+ *
  */
 public class CacheDataTask extends AsyncTask<Void, Void, Void> {
 
@@ -23,20 +27,28 @@ public class CacheDataTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         db = new StorageManager();
-        prepareData();
+        loopTroughDays();
         return null;
     }
 
-    void prepareData() {
+    /**
+     * Loop trough last seven days
+     */
+    private void loopTroughDays() {
         GregorianCalendar today = new GregorianCalendar();
 
         for (int i = 0; i < 7; i++) {
-            this.gedDataForDay(today, i);
+            this.saveDataForDay(today, i);
             today.add(Calendar.DAY_OF_YEAR, -1); // Previous day
         }
     }
 
-    private void gedDataForDay(GregorianCalendar date, int i)  {
+    /**
+     * Save data for given day if it isn't already saved
+     * @param date Date to save data for
+     * @param i Index of day
+     */
+    private void saveDataForDay(GregorianCalendar date, int i)  {
         CurrencyDate dataForDay = db.getDataForDay(date);
 
         if (dataForDay == null) {

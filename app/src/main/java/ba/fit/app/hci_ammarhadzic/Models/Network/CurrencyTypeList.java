@@ -14,7 +14,7 @@ public class CurrencyTypeList {
     public Map<String, String> currencies;
 
     public List<CurrencyType> getList() {
-        List<CurrencyType> tmp = new ArrayList<CurrencyType>();
+        List<CurrencyType> tmp = new ArrayList<>();
 
         for (String key : currencies.keySet()) {
             CurrencyType t = new CurrencyType();

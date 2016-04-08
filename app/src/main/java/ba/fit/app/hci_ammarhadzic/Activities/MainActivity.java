@@ -10,7 +10,9 @@ import android.util.Log;
 import android.widget.ListView;
 
 import ba.fit.app.hci_ammarhadzic.Adapters.CurrencyTypeListAdapter;
+import ba.fit.app.hci_ammarhadzic.BuildConfig;
 import ba.fit.app.hci_ammarhadzic.Managers.Repository;
+import ba.fit.app.hci_ammarhadzic.Managers.StorageManager;
 import ba.fit.app.hci_ammarhadzic.R;
 import ba.fit.app.hci_ammarhadzic.Tasks.CacheDataTask;
 import ba.fit.app.hci_ammarhadzic.Tasks.PrepareDataTask;
@@ -23,12 +25,10 @@ public class MainActivity extends AppCompatActivity implements PrepareDataTaskIn
 
     private static final String TAG = MainActivity.class.getName();
     private static final String ARG_CURRENCY_ID = "currencyID";
-    ProgressDialog mDialog;
+    private ProgressDialog mDialog;
 
-    @Bind(R.id.currencyList)
-    ListView currencyListView;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    @Bind(R.id.currencyList) ListView currencyListView;
+    @Bind(R.id.toolbar) Toolbar toolbar;
 
 
     @Override
@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity implements PrepareDataTaskIn
         toolbar.setTitle("Currency list");
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_36dp);
         setSupportActionBar(toolbar);
-
-
-//        StorageManager s = new StorageManager();
-//        s.clearDB();
+        Log.d(TAG, BuildConfig.API_ACCESS_KEY);
+        // Clear data from DB
+        StorageManager s = new StorageManager();
+        s.clearDB();
         prepareData();
 
     }
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements PrepareDataTaskIn
         startActivity(intent);
     }
 
-    public Activity getActivityContext() {
+    private Activity getActivityContext() {
         return this;
     }
 

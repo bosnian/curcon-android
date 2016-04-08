@@ -3,7 +3,6 @@ package ba.fit.app.hci_ammarhadzic.Tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -17,21 +16,26 @@ import ba.fit.app.hci_ammarhadzic.Models.Network.CurrencyRateList;
 import ba.fit.app.hci_ammarhadzic.Models.Network.CurrencyTypeList;
 import ba.fit.app.hci_ammarhadzic.Models.Realm.CurrencyDate;
 
+
+/**
+ * Created by Ammar Hadzic on 4/8/16.
+ *
+ * Get data from DB, if not get it from API
+ */
 public class PrepareDataTask extends AsyncTask<Void, Void, List<List<CurrencyQuote>>> {
     private static final String TAG = PrepareDataTask.class.getName();
     public PrepareDataTaskInterface delegate = null;
-    public IOException exception = null;
 
-    private NetworkManager n = new NetworkManager();
+    private final NetworkManager n = new NetworkManager();
     private StorageManager db = null;
     private CurrencyTypeList currencyTypes = null;
-    private List<List<CurrencyQuote>> data = new ArrayList<>();
+    private final List<List<CurrencyQuote>> data = new ArrayList<>();
 
     @Override
     protected List<List<CurrencyQuote>> doInBackground(Void... params) {
         db = new StorageManager();
         try {
-            prepareData();
+            loopTroughDays();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -49,7 +53,10 @@ public class PrepareDataTask extends AsyncTask<Void, Void, List<List<CurrencyQuo
 
     }
 
-    private void prepareData() throws Throwable {
+    /**
+     * Loop trough last seven days
+     */
+    private void loopTroughDays() {
         GregorianCalendar today = new GregorianCalendar();
 
         for (int i = 0; i < 7; i++) {
@@ -63,10 +70,17 @@ public class PrepareDataTask extends AsyncTask<Void, Void, List<List<CurrencyQuo
         }
     }
 
-    private List<CurrencyQuote> gedDataForDay(GregorianCalendar date) throws Throwable {
+    /**
+     * Get data for given dated
+     * First check DB, and than go to API
+     *
+     * @param date Date to check data for
+     * @return  List of data for given day
+     */
+    private List<CurrencyQuote> gedDataForDay(GregorianCalendar date) {
         CurrencyDate dataForDay = db.getDataForDay(date);
 
-        List<CurrencyQuote> today = null;
+        List<CurrencyQuote> today;
 
         if (dataForDay == null) {
 
@@ -94,6 +108,12 @@ public class PrepareDataTask extends AsyncTask<Void, Void, List<List<CurrencyQuo
         return today;
     }
 
+    /**
+     * Add full names of currencies based on their code
+     *
+     * @param list  List of currencies to add full name
+     * @return Modified list of currencies with full name
+     */
     private List<CurrencyQuote> setNameForCode(List<CurrencyQuote> list) {
 
         if (currencyTypes != null)

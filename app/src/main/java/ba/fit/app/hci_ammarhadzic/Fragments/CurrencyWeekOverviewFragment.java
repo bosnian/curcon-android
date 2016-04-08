@@ -31,7 +31,6 @@ public class CurrencyWeekOverviewFragment extends Fragment {
 
     private static final String TAG = CurrencyWeekOverviewFragment.class.getName();
     private static final String ARG_CURRENCY_ID = "currencyID";
-    private int id = 0;
 
     @Bind(R.id.weekChart) LineChart weekChart;
 
@@ -47,14 +46,13 @@ public class CurrencyWeekOverviewFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_currency_week_overview, container, false);
         ButterKnife.bind(this, rootView);
-        id = getArguments().getInt(ARG_CURRENCY_ID);
+        int id = getArguments().getInt(ARG_CURRENCY_ID);
 
         Log.d(TAG, "Currency ID " + id);
 
@@ -65,19 +63,24 @@ public class CurrencyWeekOverviewFragment extends Fragment {
     }
 
 
-    LineData prepareChartData(int id){
+    /**
+     * Prepare data for {@link LineChart}
+     * @param id Currency id to get data for
+     * @return Data for {@link LineChart}
+     */
+    private LineData prepareChartData(int id){
         // creating list of entry
         ArrayList<Entry> entries = Repository.getInstance().getCurrencyForWeek(id);
 
-        LineDataSet dataset = new LineDataSet(entries, "Quote based on USD");
-        dataset.setColor(Color.parseColor("#3F51B5"));
-        dataset.setFillColor(Color.parseColor("#C6CCEB"));
-        dataset.setCircleColor(Color.parseColor("#212A5E"));
-        dataset.setCircleRadius(6);
-        dataset.setDrawCubic(true);
-        dataset.setDrawFilled(true);
-        dataset.setValueTextSize(15);
+        LineDataSet lineDataSet = new LineDataSet(entries, "Quote based on USD");
+        lineDataSet.setColor(Color.parseColor("#3F51B5"));
+        lineDataSet.setFillColor(Color.parseColor("#C6CCEB"));
+        lineDataSet.setCircleColor(Color.parseColor("#212A5E"));
+        lineDataSet.setCircleRadius(6);
+        lineDataSet.setDrawCubic(true);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setValueTextSize(15);
         List<String> labels = DateHelper.getStringForLastWeek();
-        return new LineData(labels, dataset);
+        return new LineData(labels, lineDataSet);
     }
 }
