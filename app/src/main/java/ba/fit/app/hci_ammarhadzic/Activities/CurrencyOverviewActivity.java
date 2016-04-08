@@ -2,6 +2,7 @@ package ba.fit.app.hci_ammarhadzic.Activities;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -25,6 +26,7 @@ public class CurrencyOverviewActivity extends AppCompatActivity {
     private int currencyID = 0;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.tablayout) TabLayout tabLayout;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -56,8 +58,7 @@ public class CurrencyOverviewActivity extends AppCompatActivity {
 
         currencyID = getIntent().getExtras().getInt(ARG_CURRENCY_ID);
 
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(Repository.getInstance().getDataForToday().get(currencyID).code);
+        toolbar.setTitle(Repository.getInstance().getDataForToday().get(currencyID).name);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_36dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +66,9 @@ public class CurrencyOverviewActivity extends AppCompatActivity {
                 finish();
             }
         });
+        tabLayout.setupWithViewPager(mViewPager);
+
+
     }
 
 
@@ -113,8 +117,7 @@ public class CurrencyOverviewActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -124,8 +127,6 @@ public class CurrencyOverviewActivity extends AppCompatActivity {
                     return "Today";
                 case 1:
                     return "Last Week";
-                case 2:
-                    return "Last Month";
             }
             return null;
         }

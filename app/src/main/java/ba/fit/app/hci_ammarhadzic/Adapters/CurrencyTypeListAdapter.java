@@ -64,8 +64,7 @@ public class CurrencyTypeListAdapter extends BaseAdapter {
      * Bind properties to view
      */
     static class ViewHolder {
-        @Bind(R.id.name)
-        TextView name;
+        @Bind(R.id.name) TextView name;
         @Bind(R.id.code) TextView code;
 
         public ViewHolder(View view) {

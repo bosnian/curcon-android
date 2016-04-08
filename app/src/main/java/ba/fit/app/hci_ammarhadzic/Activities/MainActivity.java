@@ -12,13 +12,14 @@ import android.widget.ListView;
 import ba.fit.app.hci_ammarhadzic.Adapters.CurrencyTypeListAdapter;
 import ba.fit.app.hci_ammarhadzic.Managers.Repository;
 import ba.fit.app.hci_ammarhadzic.R;
-import ba.fit.app.hci_ammarhadzic.Tasks.PrepareData;
-import ba.fit.app.hci_ammarhadzic.Tasks.PrepareDataInterface;
+import ba.fit.app.hci_ammarhadzic.Tasks.CacheDataTask;
+import ba.fit.app.hci_ammarhadzic.Tasks.PrepareDataTask;
+import ba.fit.app.hci_ammarhadzic.Tasks.PrepareDataTaskInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
-public class MainActivity extends AppCompatActivity implements PrepareDataInterface {
+public class MainActivity extends AppCompatActivity implements PrepareDataTaskInterface {
 
     private static final String TAG = MainActivity.class.getName();
     private static final String ARG_CURRENCY_ID = "currencyID";
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements PrepareDataInterf
         setSupportActionBar(toolbar);
 
 
+//        StorageManager s = new StorageManager();
+//        s.clearDB();
         prepareData();
 
     }
@@ -53,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements PrepareDataInterf
         mDialog.setCancelable(false);
         mDialog.show();
 
-        PrepareData t = new PrepareData();
-        t.ctx = getApplicationContext();
+        PrepareDataTask t = new PrepareDataTask();
         t.delegate = this;
         t.execute();
+
 
     }
 
@@ -77,13 +80,15 @@ public class MainActivity extends AppCompatActivity implements PrepareDataInterf
         Log.d(TAG, finished ? "FINISHED" : "NOT FINISHED");
         if (finished) {
             CurrencyTypeListAdapter adapter = new CurrencyTypeListAdapter(MainActivity.this.getActivityContext());
-            adapter.notifyDataSetChanged();
             currencyListView.setAdapter(adapter);
 
             if (mDialog != null)
                 mDialog.cancel();
+
+            CacheDataTask  task = new CacheDataTask();
+            task.execute();
         }
 
-
     }
+
 }

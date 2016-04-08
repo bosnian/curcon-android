@@ -17,12 +17,11 @@ import butterknife.ButterKnife;
  * Created by ammar on 4/5/16.
  */
 public class CurrencyQuotesAdapter extends BaseAdapter {
-    private Activity mContext;
     private LayoutInflater mLayoutInflater = null;
     private int currencyID = 0;
     public CurrencyQuotesAdapter(Activity context,int currencyID) {
         this.currencyID = currencyID;
-        mContext = context;
+        Activity mContext = context;
         mLayoutInflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

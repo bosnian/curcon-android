@@ -1,5 +1,6 @@
 package ba.fit.app.hci_ammarhadzic.Fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class CurrencyWeekOverviewFragment extends Fragment {
 
     private static final String TAG = CurrencyWeekOverviewFragment.class.getName();
     private static final String ARG_CURRENCY_ID = "currencyID";
+    private int id = 0;
 
     @Bind(R.id.weekChart) LineChart weekChart;
 
@@ -52,24 +54,29 @@ public class CurrencyWeekOverviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_currency_week_overview, container, false);
         ButterKnife.bind(this, rootView);
-        int id = getArguments().getInt(ARG_CURRENCY_ID);
+        id = getArguments().getInt(ARG_CURRENCY_ID);
 
-        Log.d(TAG,"Currency ID " + id);
-        weekChart.setData( this.prepareChartData(id) );
+        Log.d(TAG, "Currency ID " + id);
+
+        weekChart.setData(prepareChartData(id));
         weekChart.setTouchEnabled(false);
         weekChart.invalidate();
         return rootView;
     }
 
+
     LineData prepareChartData(int id){
         // creating list of entry
-        ArrayList<Entry> entries = new ArrayList<>();
+        ArrayList<Entry> entries = Repository.getInstance().getCurrencyForWeek(id);
 
-        for (int i = 0; i < Repository.getInstance().data.size(); i++) {
-            float value = (float) Repository.getInstance().getDataForDay(i).get(id).quote;
-            entries.add(new Entry(value, i));
-        }
         LineDataSet dataset = new LineDataSet(entries, "Quote based on USD");
+        dataset.setColor(Color.parseColor("#3F51B5"));
+        dataset.setFillColor(Color.parseColor("#C6CCEB"));
+        dataset.setCircleColor(Color.parseColor("#212A5E"));
+        dataset.setCircleRadius(6);
+        dataset.setDrawCubic(true);
+        dataset.setDrawFilled(true);
+        dataset.setValueTextSize(15);
         List<String> labels = DateHelper.getStringForLastWeek();
         return new LineData(labels, dataset);
     }

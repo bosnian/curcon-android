@@ -1,6 +1,5 @@
 package ba.fit.app.hci_ammarhadzic.Tasks;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -18,11 +17,10 @@ import ba.fit.app.hci_ammarhadzic.Models.Network.CurrencyRateList;
 import ba.fit.app.hci_ammarhadzic.Models.Network.CurrencyTypeList;
 import ba.fit.app.hci_ammarhadzic.Models.Realm.CurrencyDate;
 
-public class PrepareData extends AsyncTask<Void, Void, List<List<CurrencyQuote>>> {
-    private static final String TAG = PrepareData.class.getName();
-    public PrepareDataInterface delegate = null;
+public class PrepareDataTask extends AsyncTask<Void, Void, List<List<CurrencyQuote>>> {
+    private static final String TAG = PrepareDataTask.class.getName();
+    public PrepareDataTaskInterface delegate = null;
     public IOException exception = null;
-    public Context ctx;
 
     private NetworkManager n = new NetworkManager();
     private StorageManager db = null;
@@ -31,11 +29,9 @@ public class PrepareData extends AsyncTask<Void, Void, List<List<CurrencyQuote>>
 
     @Override
     protected List<List<CurrencyQuote>> doInBackground(Void... params) {
-        db = new StorageManager(ctx);
+        db = new StorageManager();
         try {
             prepareData();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -53,39 +49,58 @@ public class PrepareData extends AsyncTask<Void, Void, List<List<CurrencyQuote>>
 
     }
 
-    void prepareData() throws Throwable {
+    private void prepareData() throws Throwable {
         GregorianCalendar today = new GregorianCalendar();
 
         for (int i = 0; i < 7; i++) {
-            Log.d(TAG,"Getting data for day " + i);
-            data.add(this.gedDataForDay(today));
+            Log.d(TAG, "Getting data for day " + i);
+            List<CurrencyQuote> currencyQuotes = this.gedDataForDay(today);
+            if (currencyQuotes == null){
+                return;
+            }
+            data.add(currencyQuotes);
             today.add(Calendar.DAY_OF_YEAR,-1); // Previous day
         }
     }
 
     private List<CurrencyQuote> gedDataForDay(GregorianCalendar date) throws Throwable {
         CurrencyDate dataForDay = db.getDataForDay(date);
+
         List<CurrencyQuote> today = null;
+
         if (dataForDay == null) {
+
             currencyTypes = n.getCurrencyTypes();
             CurrencyRateList dataForDate = n.getDataForDate(date);
             if( dataForDate == null ){
-                finalize();
+                return null;
             }
             today = this.setNameForCode(dataForDate.getList());
+
+            Log.d(TAG, "Got data from API");
         } else {
-            today = dataForDay.quotes;
+            Log.d(TAG,"Got data from DB");
+
+            //Copy data
+            today = new ArrayList<>();
+            for (int i = 0; i < dataForDay.quotes.size(); i++) {
+                CurrencyQuote currencyQuote = new CurrencyQuote();
+                currencyQuote.name = dataForDay.quotes.get(i).name;
+                currencyQuote.code = dataForDay.quotes.get(i).code;
+                currencyQuote.quote = dataForDay.quotes.get(i).quote;
+                today.add(currencyQuote);
+            }
         }
         return today;
     }
 
     private List<CurrencyQuote> setNameForCode(List<CurrencyQuote> list) {
 
-        if (currencyTypes != null) {
-            for (int i = 0; i < list.size(); i++) {
-                list.get(i).name = currencyTypes.currencies.get(list.get(i).name);
-            }
-        }
+        if (currencyTypes != null)
+            for (int i = 0; i < list.size(); i++)
+                list.get(i).name = currencyTypes.currencies.get(list.get(i).code);
+
         return list;
     }
+
 }

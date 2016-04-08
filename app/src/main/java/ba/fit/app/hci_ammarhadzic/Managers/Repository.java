@@ -3,6 +3,8 @@ package ba.fit.app.hci_ammarhadzic.Managers;
 import android.content.Context;
 import android.util.Log;
 
+import com.github.mikephil.charting.data.Entry;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +25,6 @@ public class Repository {
     }
     public Context mAppContext = null;
 
-    public double USDQuote = 0;
-    public int USDPosition = 0;
     public double baseValue = 1.0;
 
 
@@ -39,20 +39,20 @@ public class Repository {
 
         List<CurrencyQuote> tmp = new ArrayList<>();
 
-        tmp.addAll(this.getDataForToday());
+        for (int i = 0; i < this.getDataForToday().size(); i++) {
+            CurrencyQuote t = new CurrencyQuote(this.getDataForToday().get(i));
+            tmp.add(t);
+        }
+
         CurrencyQuote x = tmp.get(id);
         tmp.remove(id);
 
         double usdq = baseValue / x.quote;
-        Log.d(TAG,"USD quote " + String.valueOf(baseValue) + " / " + x.code + String.valueOf(x.quote) + " = "+String.valueOf(usdq));
+
         for (int i = 0; i < tmp.size(); i++) {
             double t = tmp.get(i).quote;
             t = t * usdq;
             tmp.get(i).quote = t;
-            if (tmp.get(i).code.equals("EUR")) {
-                Log.d(TAG,"EUD quote " + tmp.get(i).quote * usdq);
-
-            }
         }
 
         lastID = id;
@@ -62,12 +62,18 @@ public class Repository {
 
     public List<List<CurrencyQuote>> data = null;
 
+    public List<CurrencyQuote> getDataForToday(){ return getDataForDay(0);}
 
-    public List<CurrencyQuote> getDataForToday(){
-        return getDataForDay(0);
+    public List<CurrencyQuote> getDataForDay(int i){ return data.get(i); }
+
+    public ArrayList<Entry> getCurrencyForWeek(int id){
+        ArrayList<Entry> data = new ArrayList<>();
+
+        for (int i = 0; i < this.data.size(); i++) {
+            data.add(new Entry((float) this.data.get(i).get(id).quote,i));
+        }
+
+        return data;
     }
 
-    public List<CurrencyQuote> getDataForDay(int i){
-        return data.get(i);
-    }
 }
