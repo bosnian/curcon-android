@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
-def API_ACCESS_KEY = System.getenv("API_ACCESS_KEY") ?: '"Env var not set: API_ACCESS_KEY"';
+def API_ACCESS_KEY = '"' + System.getenv("API_ACCESS_KEY") + '"' ?: '"Env var not set: API_ACCESS_KEY"';
 
 android {
     lintOptions {

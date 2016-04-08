@@ -10,9 +10,7 @@ import android.util.Log;
 import android.widget.ListView;
 
 import ba.fit.app.hci_ammarhadzic.Adapters.CurrencyTypeListAdapter;
-import ba.fit.app.hci_ammarhadzic.BuildConfig;
 import ba.fit.app.hci_ammarhadzic.Managers.Repository;
-import ba.fit.app.hci_ammarhadzic.Managers.StorageManager;
 import ba.fit.app.hci_ammarhadzic.R;
 import ba.fit.app.hci_ammarhadzic.Tasks.CacheDataTask;
 import ba.fit.app.hci_ammarhadzic.Tasks.PrepareDataTask;
@@ -41,11 +39,11 @@ public class MainActivity extends AppCompatActivity implements PrepareDataTaskIn
         toolbar.setTitle("Currency list");
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_36dp);
         setSupportActionBar(toolbar);
-        Log.d(TAG, BuildConfig.API_ACCESS_KEY);
-        // Clear data from DB
-        StorageManager s = new StorageManager();
-        s.clearDB();
-        prepareData();
+
+//        // Clear data from DB
+//        StorageManager s = new StorageManager();
+//        s.clearDB();
+//        prepareData();
 
     }
 
