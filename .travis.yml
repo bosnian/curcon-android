@@ -8,13 +8,17 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   - extra-android-support
+  
 branches:
   only:
     - master
+    
 install:
 - true
+
 script:
 - "./gradlew build"
+
 deploy:
   skip_cleanup: true
   provider: releases
@@ -24,3 +28,6 @@ deploy:
   on:
     repo: bosnian/curcon-android
     tag: true
+    
+notifications:
+  email: false
