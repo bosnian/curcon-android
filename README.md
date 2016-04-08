@@ -7,6 +7,7 @@ This is personal class project for course **Human-Computer Interaction (HCI)** o
 
 It uses [CurrencyLayer](https://currencylayer.com/) API to make currency conversions. Because it uses free version, calculations for currencies other than USD had to be done manually.
 
+
 ## Setup
 TODO: Provide details for project setup
 
