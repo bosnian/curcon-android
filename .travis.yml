@@ -1,27 +1,24 @@
 language: android
 android:
   components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    - platform-tools
-    - tools
-
-    # The BuildTools version used by your project
-    - build-tools-22.0.1
-
-    # The SDK version used to compile your project
-    - android-22
-
-    # Additional components
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - extra-android-support
-
+  - platform-tools
+  - tools
+  - build-tools-22.0.1
+  - android-22
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - extra-android-support
+branches:
+  only:
+    - master
 install:
-  # Check install section: http://docs.travis-ci.com/user/build-configuration/#install
-  # If you'd like to skip the install stage entirely, set it to true and nothing will be run.
-  - true
-
+- true
 script:
-  # By default Travis-ci executes './gradlew build connectedCheck' if no 'script:' section found.
-  - ./gradlew build
+- "./gradlew build"
+deploy:
+  provider: releases
+  api_key:
+    secure: fwqyaWMlGYc61flFH9tgf9Ebb8M/2RD5Ks4w8xDlwHChORugkHwOB2xEsuuM/nRYSosV4GXgwNmz7IzAKLtarasGYrS2LY96r8y86PWbUPulGYnhB2XnUEO09Bc/ehOc5YbxNqIdb12+zIZGcN/GN6A+0We1Yp9Ui3GRTyKMU2nDBai0myIrGq3VfaKu94fkGCuSvwTSvOGydtfYDI/EpxqT/hQxaKJHTPX0rrQaflPisbuHK07T5cJKg9QqiGOJwMBCVtP/kGzdSxjwsYD0GJaugVQmUvg9VIyNejqdlTgqxuwnIrLjX5WNXUljlJrZ3GXlt8+628Jh4GlorRuMvHvHsdacxvZrXeZnvreD8ZPrnr35J5HUXxc8ea0CfCNI0uvW15ph2IMYL00QkI/ZP5y93Dwx89v24pCu7aBRxwEnO3vsg84EweX4Em9LNXGkW0NwvqlP+qPJtWF2Wn0b+8+Fk6LwV0BUkCGYvmpP6Qk9JEDwUotZM/D3t9AEeLyvUprAf1hO+/O86qlxNtmGV4uJlMOZgpcmwGPcQjim4IP/bqe+YF20suetvaUMO0guA+pjebB2F9aKlQ1C27dze7VGEhrzxVmjIvs6gnXksL5DOCQwiYd6pTQNlQQLgbhrs/40dPdm0oazAS5KJ9a3B7Mfkn/3NEqKl1fNQkI9UC4=
+  file: "./app/build/outputs/apk/app-debug.apk"
+  on:
+    repo: bosnian/curcon-android
