@@ -7,9 +7,22 @@ This is personal class project for course **Human-Computer Interaction (HCI)** o
 
 It uses [CurrencyLayer](https://currencylayer.com/) API to make currency conversions. Because it uses free version, calculations for currencies other than USD had to be done manually.
 
-
 ## Setup
-TODO: Provide details for project setup
+
+### 1. Get API key
+Go to [CurrencyLayer](https://currencylayer.com/), register and you will find your key on dashboard.
+
+### 2. Setup key
+#### A) Using ENV variable
+Set an environment variable *API_ACCESS_KEY* to your key.
+#### B) Hardcode
+Go to *ServiceGenerator* class and change following line:
+```java
+private static final String API_ACCESS_KEY = "YOUR_KEY"
+
+```
+### 3. Happy playing with it :smile:
+
 
 ## Copyright & License
  
