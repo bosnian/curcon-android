@@ -18,9 +18,11 @@ public class Repository {
     private static final String TAG = Repository.class.getName();
 
     public Context mAppContext = null;
-    public final double baseValue = 1.0;
+    public int selectedID = -1;
+    public double baseValue = 1.0;
     public List<List<CurrencyQuote>> data = null;
     private List<CurrencyQuote> lastList = null;
+
     private int lastID = -1;
 
     // Singleton ...

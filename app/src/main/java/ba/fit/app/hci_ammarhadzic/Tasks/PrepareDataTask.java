@@ -99,6 +99,7 @@ public class PrepareDataTask extends AsyncTask<Void, Void, List<List<CurrencyQuo
             today = new ArrayList<>();
             for (int i = 0; i < dataForDay.quotes.size(); i++) {
                 CurrencyQuote currencyQuote = new CurrencyQuote();
+                currencyQuote.ID = i;
                 currencyQuote.name = dataForDay.quotes.get(i).name;
                 currencyQuote.code = dataForDay.quotes.get(i).code;
                 currencyQuote.quote = dataForDay.quotes.get(i).quote;

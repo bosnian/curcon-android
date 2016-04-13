@@ -8,37 +8,36 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ba.fit.app.hci_ammarhadzic.Managers.Repository;
-import ba.fit.app.hci_ammarhadzic.Models.CurrencyQuote;
 import ba.fit.app.hci_ammarhadzic.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by ammar on 4/5/16.
+ * Created by Ammar Hadzic on 4/10/16.
  */
-public class CurrencyTypeListAdapter extends BaseAdapter {
-
+public class LeftDrawerAdapter extends BaseAdapter {
     private LayoutInflater mLayoutInflater = null;
-    public List<CurrencyQuote> mData = null;
 
-    public CurrencyTypeListAdapter(Activity context) {
+    List<String> menuItems;
+
+    public LeftDrawerAdapter(Activity context, List<String> items) {
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mData = Repository.getInstance().getDataForToday();
+
+        menuItems = items;
+
     }
 
     @Override
     public int getCount() {
-        return mData.size();
+        return menuItems.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mData.get(position);
+        return menuItems.get(position);
     }
 
     @Override
@@ -53,13 +52,13 @@ public class CurrencyTypeListAdapter extends BaseAdapter {
         if (convertView != null) {
             holder = (ViewHolder) convertView.getTag();
         } else {
-            convertView = mLayoutInflater.inflate(R.layout.currency_list_item, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.drawer_list_item, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         }
 
-        holder.code.setText(mData.get(position).code);
-        holder.name.setText(mData.get(position).name);
+        holder.option.setText(menuItems.get(position));
+
         return convertView;
     }
 
@@ -67,29 +66,10 @@ public class CurrencyTypeListAdapter extends BaseAdapter {
      * Bind properties to view
      */
     static class ViewHolder {
-        @Bind(R.id.name) TextView name;
-        @Bind(R.id.code) TextView code;
+        @Bind(R.id.option) TextView option;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
-    }
-
-    public void filter(String part){
-
-        List<CurrencyQuote> tmp = new ArrayList<>();
-
-        List<CurrencyQuote> data = Repository.getInstance().getDataForToday();
-        for (int i = 0; i <data.size(); i++) {
-
-            CurrencyQuote t = data.get(i);
-
-            if(t.code.toLowerCase().contains(part) || t.name.toLowerCase().contains(part)){
-                tmp.add(t);
-            }
-        }
-
-        this.mData = tmp;
-        this.notifyDataSetChanged();
     }
 }
