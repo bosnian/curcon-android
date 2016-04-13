@@ -21,12 +21,16 @@ Go to *ServiceGenerator* class and change following line:
 private static final String API_ACCESS_KEY = "YOUR_KEY"
 
 ```
-### 3. Happy playing with it :smile:
+### 3. Screenshots & Happy playing with it :smile:
 
-<div style="float: right;">
-<img src="https://cloud.githubusercontent.com/assets/1209195/14505056/c9ebee60-01b7-11e6-86d6-6a5719dedd20.png" width="300px"/>
-<img src="https://cloud.githubusercontent.com/assets/1209195/14505056/c9ebee60-01b7-11e6-86d6-6a5719dedd20.png" width="300px"/>
-<div/>
+
+<img  src="https://cloud.githubusercontent.com/assets/1209195/14505056/c9ebee60-01b7-11e6-86d6-6a5719dedd20.png" width="300px"/>
+<img src="https://cloud.githubusercontent.com/assets/1209195/14505057/c9ed0dd6-01b7-11e6-808a-cb7c3ccddf1b.png" width="300px"/>
+<img src="https://cloud.githubusercontent.com/assets/1209195/14505058/c9ed46a2-01b7-11e6-86d3-096f30d582f3.png" width="300px"/>
+<img src="https://cloud.githubusercontent.com/assets/1209195/14505055/c9e9b44c-01b7-11e6-89cc-c8bafec59896.png" width="300px"/>
+<img src="https://cloud.githubusercontent.com/assets/1209195/14505054/c9e8b20e-01b7-11e6-81aa-2873671f241d.png" width="300px"/>
+<img src="https://cloud.githubusercontent.com/assets/1209195/14505053/c9e8026e-01b7-11e6-9206-c26bb393992d.png" width="300px"/>
+
 
 
 ## Copyright & License
