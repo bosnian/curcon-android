@@ -23,6 +23,11 @@ private static final String API_ACCESS_KEY = "YOUR_KEY"
 ```
 ### 3. Happy playing with it :smile:
 
+<div style="float: right;">
+<img src="https://cloud.githubusercontent.com/assets/1209195/14505056/c9ebee60-01b7-11e6-86d6-6a5719dedd20.png" width="300px"/>
+<img src="https://cloud.githubusercontent.com/assets/1209195/14505056/c9ebee60-01b7-11e6-86d6-6a5719dedd20.png" width="300px"/>
+<div/>
+
 
 ## Copyright & License
  
